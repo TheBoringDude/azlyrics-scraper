@@ -12,8 +12,6 @@ const AzLyricsSearch_Lyrics = 'https://search.azlyrics.com/search.php?q=%s&w=lyr
 const AzLyricsSearch_Songs = 'https://search.azlyrics.com/search.php?q=%s&w=songs&p=1';
 
 class AzLyrics {
-  List<Map<String, String>> qLyrics = [];
-
   static Future<Document> query(QueryTypes t, String q) async {
     var w = '';
 
@@ -29,8 +27,31 @@ class AzLyrics {
         exit(1);
     }
 
-    final r = await requester(sprintf(AzLyricsSearch_Songs, [q]));
+    final r = await requester(sprintf(w, [q]));
     return parse(r);
+  }
+
+  Map<String, String> _parse_td(Element i) {
+    return {
+      'title': i.querySelector('a').text.trim(),
+      'author': i.querySelectorAll('b')[1]?.text?.trim(),
+      'link': i.querySelector('a').attributes['href'].trim(),
+    };
+  }
+
+  Future<List<Map<String, String>>> search_lyrics(String query) async {
+    var qLyrics = <Map<String, String>>[];
+
+    final doc = await AzLyrics.query(QueryTypes.lyrics, query);
+
+    for (var i in doc.getElementsByClassName('visitedlyr')) {
+      var song = _parse_td(i);
+      song['lyrics'] = i.querySelector('small').text.trim();
+
+      qLyrics.add(song);
+    }
+
+    return qLyrics;
   }
 
   Future<List<Map<String, String>>> search_songs(String query) async {
@@ -39,11 +60,7 @@ class AzLyrics {
     final doc = await AzLyrics.query(QueryTypes.songs, query);
 
     for (var i in doc.getElementsByClassName('visitedlyr')) {
-      var song = {
-        'title': i.querySelector('a').text.trim(),
-        'author': i.querySelectorAll('b')[1]?.text?.trim(),
-        'link': i.querySelector('a').attributes['href'].trim(),
-      };
+      var song = _parse_td(i);
 
       qSongs.add(song);
     }
