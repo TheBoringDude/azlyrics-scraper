@@ -1,11 +1,8 @@
 import 'package:wyly/src/azlyrics.dart';
 
 void main(List<String> arguments) async {
-  var a = AzLyrics();
+  var a = await AzLyrics.init('https://www.azlyrics.com/lyrics/justintimberlake/mirrors.html');
 
-  final result = await a.search_lyrics('sample');
-
-  for (var i in result) {
-    print(i);
-  }
+  print(a.singer);
+  print(a.lyrics);
 }
