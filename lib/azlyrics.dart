@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:wyly/src/handlers/song.dart';
+import 'package:azlyrics/src/song.dart';
 
-import 'package:wyly/src/handlers/req.dart';
+import 'package:azlyrics/src/req.dart';
 
 enum QueryTypes {
   songs,

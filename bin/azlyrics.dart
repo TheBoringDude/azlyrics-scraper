@@ -1,4 +1,4 @@
-import 'package:wyly/src/azlyrics.dart';
+import 'package:azlyrics/azlyrics.dart';
 
 void main(List<String> arguments) async {
   var a = await AzLyrics.init('https://www.azlyrics.com/lyrics/justintimberlake/mirrors.html');

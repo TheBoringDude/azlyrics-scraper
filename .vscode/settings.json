@@ -5,5 +5,10 @@
         "editor.insertSpaces": true,
         "editor.detectIndentation": false,
         "editor.suggest.insertMode": "replace"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
